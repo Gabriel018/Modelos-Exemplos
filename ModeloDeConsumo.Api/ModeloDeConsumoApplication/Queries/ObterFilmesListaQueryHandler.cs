@@ -27,7 +27,7 @@ namespace ModeloDeConsumoApplication.Queries
 
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            return content?? "";
+            return content?? "Sem retorno";
         }
     }
 }
