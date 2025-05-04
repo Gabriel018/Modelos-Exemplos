@@ -1,16 +1,19 @@
+using ModeloDeConsumoApplication.Queries;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var config = builder.Configuration;
 var tmdbToken = config["TMDb:BearerToken"];
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(ObterFilmesListaQuery).Assembly));
 
 var app = builder.Build();
 
