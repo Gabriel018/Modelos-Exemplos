@@ -17,11 +17,11 @@ jobs:
 
     runs-on: windows-latest
 
-    # env:
-    #   Solution_Name: your-solution-name                        
-    #   Test_Project_Path: your-test-project-path               
-    #   Wap_Project_Directory: your-wap-project-directory-name    
-    #   Wap_Project_Path: your-wap-project-path                  
+    env:
+      Solution_Name: Modelos-Exemplo                        
+      Test_Project_Path: your-test-project-path               
+      Wap_Project_Directory: your-wap-project-directory-name    
+      Wap_Project_Path: your-wap-project-path                  
 
     steps:
     - name: Checkout
