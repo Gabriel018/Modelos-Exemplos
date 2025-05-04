@@ -2,8 +2,11 @@ using ModeloDeConsumoApplication.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var config = builder.Configuration;
-var tmdbToken = config["TMDb:BearerToken"];
+var configBearer = builder.Configuration;
+_ = configBearer["TMDb:BearerToken"];
+
+var uriConfiguration = builder.Configuration;
+_ = uriConfiguration["UriConfiguration"];
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
