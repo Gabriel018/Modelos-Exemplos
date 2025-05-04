@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 
-namespace ModeloDeConsumoApplication.Queries 
+namespace ModeloDeConsumoApplication.Queries
 {
     public class ObterFilmesListaQueryHandler(HttpClient httpClient, IConfiguration configuration) : IRequestHandler<ObterFilmesListaQuery, string>
     {
@@ -12,11 +12,7 @@ namespace ModeloDeConsumoApplication.Queries
 
         public async Task<string> Handle(ObterFilmesListaQuery _, CancellationToken cancellationToken)
         {
-            var httpRequest = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(uriConfig)
-            };
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Get, uriConfig);
 
             httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tmdbToken);
 
@@ -27,7 +23,7 @@ namespace ModeloDeConsumoApplication.Queries
 
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            return content?? "Sem retorno";
+            return content ?? "Sem retorno";
         }
     }
 }

@@ -18,7 +18,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: ModeloDeConsumo                       
+      Solution_Name: ModeloDeConsumo.Api                       
       Test_Project_Path: your-test-project-path               
       Wap_Project_Directory: your-wap-project-directory-name    
       Wap_Project_Path: your-wap-project-path                  
@@ -42,7 +42,7 @@ jobs:
     #   run: dotnet test
 
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      run: msbuild $env:ModeloDeConsumo.Api/t:Restore /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
 
