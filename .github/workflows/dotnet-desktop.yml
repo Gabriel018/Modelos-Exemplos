@@ -1,62 +1,29 @@
-name: .NET Core Desktop Build
+name: Testar Build C#
 
 on:
   push:
-    branches: [ "main" ] 
+    branches: [main]
   pull_request:
-    branches: [ "main" ]  
+    branches: [main]
 
 jobs:
   build:
-
-    strategy:
-      matrix:
-        configuration: [Debug, Release] 
-
-    runs-on: windows-latest.
-
-    env:
-      Solution_Name: ModeloDeConsumo.Api/ModeloDeConsumo.Api.sln  
-      Configuration: ${{ matrix.configuration }}  
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-    - name: Install .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x  
+      - name: Instalar .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x' 
 
-    - name: Restore dependencies
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }} 
+      - name: Restaurar dependências
+        run: dotnet restore
 
-    - name: Build application
-      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}  
+      - name: Compilar projeto
+        run: dotnet build --no-restore --configuration Release
 
-    - name: Verify build success
-      run: |
-        if ($?) { Write-Host "Build succeeded!" } else { Write-Host "Build failed!"; exit 1 }
-
-    - name: Generate version (Optional)
-      run: |
-        $csprojPath = "./path/to/your/project.csproj"
-        [xml]$csprojXml = Get-Content $csprojPath
-        $version = $csprojXml.Project.PropertyGroup.Version
-        $newVersion = [version]$version
-        $newVersion = $newVersion.Major.ToString() + "." + $newVersion.Minor.ToString() + "." + ($newVersion.Build + 1).ToString()
-        $csprojXml.Project.PropertyGroup.Version = $newVersion
-        $csprojXml.Save($csprojPath)
-        echo "Nova versão: $newVersion"
-
-    - name: Upload build artifacts (optional)
-      uses: actions/upload-artifact@v4
-      with:
-        name: Build Output
-        path: ./path/to/output/directory  
+      # - name: Rodar testes (opcional)
+      #   run: dotnet test --no-build --verbosity normal

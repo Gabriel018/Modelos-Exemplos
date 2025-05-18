@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModeloDeConsumo.CrossCutting\ModeloDeConsumo.CrossCutting.csproj" />
     <ProjectReference Include="..\ModeloDeConsumoApplication\ModeloDeConsumoApplication.csproj" />
   </ItemGroup>
 

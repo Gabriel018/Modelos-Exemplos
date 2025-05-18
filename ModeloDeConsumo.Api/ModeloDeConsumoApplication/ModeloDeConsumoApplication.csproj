@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Services\" />
+    <Compile Remove="Commands\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Commands\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Commands\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="8.1.1" />
   </ItemGroup>
 
 </Project>

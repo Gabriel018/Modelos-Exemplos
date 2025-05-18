@@ -1,3 +1,4 @@
+using ModeloDeConsumo.CrossCutting.Extensions;
 using ModeloDeConsumoApplication.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SchemaFilter<DisplayNameSchemaFilter>();
+});
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(ObterFilmesListaQuery).Assembly));

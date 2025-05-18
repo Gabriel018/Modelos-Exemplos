@@ -21,7 +21,7 @@ namespace ModeloDeConsumo.Api.Controllers
 
             if( result != null)
             {
-                return Content(result,"Application/json");
+                return Ok(result);
             }
 
             return BadRequest();

@@ -1,16 +1,18 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
+using ModeloDeConsumoApplication.Reponse;
 using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace ModeloDeConsumoApplication.Queries
 {
-    public class ObterFilmesListaQueryHandler(HttpClient httpClient, IConfiguration configuration) : IRequestHandler<ObterFilmesListaQuery, string>
+    public class ObterFilmesListaQueryHandler(HttpClient httpClient, IConfiguration configuration) : IRequestHandler<ObterFilmesListaQuery, ObterFilmesListaResponse?>
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly string tmdbToken = configuration["TMDb:BearerToken"]!;
         private readonly string uriConfig = configuration["UriConfiguration"]!;
 
-        public async Task<string> Handle(ObterFilmesListaQuery _, CancellationToken cancellationToken)
+        public async Task<ObterFilmesListaResponse?> Handle(ObterFilmesListaQuery request, CancellationToken cancellationToken)
         {
             using var httpRequest = new HttpRequestMessage(HttpMethod.Get, uriConfig);
 
@@ -19,11 +21,14 @@ namespace ModeloDeConsumoApplication.Queries
             var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
-                return "Erro ao acessar a API TMDb";
+                return null;
 
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            return content ?? "Sem retorno";
+            var result = JsonSerializer.Deserialize<ObterFilmesListaResponse>(content);
+
+            return result;
         }
     }
 }
+
