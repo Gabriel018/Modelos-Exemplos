@@ -21,12 +21,10 @@ jobs:
           include-prerelease: true
 
       - name: Restaurar dependencias
-        run: dotnet restore ModeloDeConsumo.Api.sln
-        working-directory: Modelos-Exemplos/ModeloDeConsumo.Api
+        run: dotnet restore ModeloDeConsumo.Api/ModeloDeConsumo.Api/ModeloDeConsumo.Api.csproj
 
       - name: Compilar projeto
-        run: dotnet build --no-restore --configuration Release
-        working-directory: Modelos-Exemplos/ModeloDeConsumo.Api
+        run: dotnet build --no-restore --configuration Release ModeloDeConsumo.Api/ModeloDeConsumo.Api/ModeloDeConsumo.Api.csproj
 
       # - name: Rodar testes (opcional)
       #   run: dotnet test --no-build --verbosity normal ModeloDeConsumo.Api.sln
