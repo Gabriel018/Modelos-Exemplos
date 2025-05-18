@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 
-jobs:
+jjobs:
   build:
     runs-on: ubuntu-latest
 
@@ -17,13 +17,17 @@ jobs:
       - name: Instalar .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.0.x' 
+          dotnet-version: '9.0.x'
+          include-prerelease: true
 
-      - name: Restaurar dependências
-        run: dotnet restore ModeloDeConsumo.Api/ModeloDeConsumo.Api.sln
+      - name: Restaurar dependencias
+        run: dotnet restore ModeloDeConsumo.Api.sln
+        working-directory: Modelos-Exemplos1/ModeloDeConsumo.Api
 
       - name: Compilar projeto
         run: dotnet build --no-restore --configuration Release
+        working-directory: Modelos-Exemplos1/ModeloDeConsumo.Api
 
       # - name: Rodar testes (opcional)
-      #   run: dotnet test --no-build --verbosity normal
+      #   run: dotnet test --no-build --verbosity normal ModeloDeConsumo.Api.sln
+      #   working-directory: Modelos-Exemplos1/ModeloDeConsumo.Api
